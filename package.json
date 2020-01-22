@@ -1,0 +1,78 @@
+{
+  "name": "shop-cart",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "check": "lint-staged",
+    "start": "webpack-dev-server --mode development --progress --port",
+    "build": "webpack --mode production",
+    "eslint": "dir /B /S | findstr /vrc:node_modules | findstr /erc:.jsx* | eslint --ignore-pattern '!.eslintrc.js' --color",
+    "eslint-fix": "npm run eslint -- --fix"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "./commitlint.config.js"
+    ]
+  },
+  "lint-staged": {
+    "*.(ts|tsx)": [
+      "npm run eslint",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aimtbr/shop-cart.git"
+  },
+  "author": "Maxim Marchuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aimtbr/shop-cart/issues"
+  },
+  "homepage": "https://github.com/aimtbr/shop-cart#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "fork-ts-checker-webpack-plugin": "^4.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "husky": "^4.1.0",
+    "lint-staged": "^10.0.1",
+    "ts-loader": "^6.2.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "dependencies": {
+    "@types/node": "^13.1.8",
+    "@types/react": "^16.9.18",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-redux": "^7.1.6",
+    "@types/react-router-dom": "^5.1.3",
+    "localforage": "^1.7.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "typescript": "^3.7.5"
+  }
+}
