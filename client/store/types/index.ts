@@ -1,15 +1,17 @@
 import { Component } from 'react';
 import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import { RootState } from '../../store';
+import { Items } from '../../../api/db/database';
+
 
 export interface Item {
   id: string;
   title: string;
   description: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   image: string;
   count: number;
   price: number;
@@ -25,5 +27,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   null,
-  Action<string>
+  Action
 >;
+
+export type AppDispatch = ThunkDispatch<RootState, null, Action>;

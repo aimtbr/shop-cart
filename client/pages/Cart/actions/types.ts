@@ -1,10 +1,13 @@
 import { Action } from 'redux';
 
+import { Item } from '../../../store/types';
+
 
 export const INCR_ITEM_COUNT = 'INCR_ITEM_COUNT';
 export const DECR_ITEM_COUNT = 'DECR_ITEM_COUNT';
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
 export const REMOVE_CART_ITEMS = 'REMOVE_CART_ITEMS';
+export const REFRESH_CART_ITEMS = 'REFRESH_CART_ITEMS';
 
 
 interface CartItemCount extends Action {
@@ -28,6 +31,16 @@ interface RemoveCartItems extends Action {
   }
 }
 
-type CartActions = CartItemCount | RemoveCartItem | RemoveCartItems;
+interface RefreshCartItems extends Action {
+  type: typeof REFRESH_CART_ITEMS;
+  payload: {
+    items: {
+      [index: string]: Item
+    }
+  }
+}
+
+type CartActions = CartItemCount | RemoveCartItem | RemoveCartItems |
+  RefreshCartItems;
 
 export default CartActions;

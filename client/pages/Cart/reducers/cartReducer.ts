@@ -1,4 +1,4 @@
-import Actions from '../actions/actions';
+import Actions from '../actions/types';
 import * as ActionTypes from '../actions/types';
 import { Item } from '../../../store/types';
 

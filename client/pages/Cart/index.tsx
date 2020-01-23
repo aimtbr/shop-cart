@@ -1,11 +1,20 @@
+import * as React from 'react';
+import { Dispatch } from 'redux';
 import { connect } from "react-redux";
 
+import { getCartItems } from './actions/actions';
 import cartReducer from './reducers/cartReducer';
-import { Page, AppThunk } from "../../store/types";
+import Cart from './components/Cart';
+import { StoreState } from '../../pages';
+import { Page, AppDispatch, Item } from "../../store/types";
 
 
-interface ExtractedProps {
+type Props = StateProps & DipatchProps;
 
+interface StateProps {
+  items: {
+    [index: string]: Item
+  };
 }
 
 // interface DipatchProps {
@@ -13,24 +22,30 @@ interface ExtractedProps {
 // }
 
 interface DipatchProps {
-  [index: string]: AppThunk;
+  [index: string]: () => void;
 }
 
-class CartPage extends Page<ExtractedProps> {
+class CartPage extends Page<Props> {
   static readonly path = '/cart';
   static readonly reducer = { cart: cartReducer };
 
+  componentWillMount () {
+    this.props.getCartItems();
+  }
+
   render () {
-    return <Cart />;
+    const { items } = this.props;
+
+    return <Cart items={items}/>;
   }
 }
 
-const mapStateToProps = (): ExtractedProps => ({
-
+const mapStateToProps = (state: StoreState): StateProps => ({
+  items: state.cart.items,
 });
 
-const mapDispatchToProps = (): DipatchProps => ({
-
+const mapDispatchToProps = (dispatch: AppDispatch): DipatchProps => ({
+  getCartItems: () => dispatch(getCartItems()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartPage);

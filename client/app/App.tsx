@@ -7,6 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from '../store';
 import Pages, { PageTypes } from '../pages';
 
+import '../../public/main.css';
 
 const setupRoutes = (): React.ReactElement[] => Object.entries(Pages)
   .map(([pageTitle, PageComponent]: [string, PageTypes]): React.ReactElement => {
