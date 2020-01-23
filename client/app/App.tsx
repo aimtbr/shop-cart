@@ -8,11 +8,11 @@ import store, { persistor } from '../store';
 import Pages, { PageTypes } from '../pages';
 
 
-const setupRoutes = (): React.ReactElement[] => Object.values(Pages)
-  .map((Page: PageTypes): React.ReactElement => {
-    const { title, path } = Page;
+const setupRoutes = (): React.ReactElement[] => Object.entries(Pages)
+  .map(([pageTitle, PageComponent]: [string, PageTypes]): React.ReactElement => {
+    const { path } = PageComponent;
 
-    return (<Route key={title} path={path} component={Page} />);
+    return (<Route key={pageTitle} path={path} component={PageComponent} />);
   });
 
 const App = (): React.ReactElement => {

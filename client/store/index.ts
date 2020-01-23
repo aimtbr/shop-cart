@@ -14,9 +14,9 @@ const persistConfig = {
 
 
 const reducers: object = Object.values(Pages).reduce((accumulator, Page) => {
-  const { title, reducer } = Page;
+  const { reducer } = Page;
 
-  return { ...accumulator, [title]: reducer || {} };
+  return { ...accumulator, ...(reducer || {}) };
 }, {});
 const rootReducer = combineReducers(reducers);
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -29,7 +29,6 @@ const store = createStore(
 const persistor = persistStore(store);
 
 
-
+export type RootState = ReturnType<typeof rootReducer>;
 export { persistor };
-
 export default store;

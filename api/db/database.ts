@@ -1,4 +1,4 @@
-import { Item } from '../../client/pages/Cart/types';
+import { Item } from '../../client/store/types';
 // TODO: ADD UNIQUE ID FOR ALL THE ITEMS AND GET ITS TYPE FOR AN INTERFACE
 
 export const items: Item[] = [

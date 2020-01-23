@@ -5,11 +5,11 @@ interface ExtractedProps {
   image: string;
   description: string;
   count: number;
-  total:
+  totalPrice: string;
 }
 
 const Item = (props: ExtractedProps): React.ReactElement<ExtractedProps> => {
-  const { title, image, description, count, total } = props;
+  const { title, image, description, count, totalPrice } = props;
 
   return (
   <div className="item">
@@ -17,21 +17,21 @@ const Item = (props: ExtractedProps): React.ReactElement<ExtractedProps> => {
     <p className="item-title">
       {title}
     </p>
-    <button className="remove-item-button">
+    <button className="remove-item-button" type="button">
       {/* ADD THE FONT LOGO AND REVIEW WHAT IS THE BEST WAY TO DO IT MAYBE WITHOUT p TAG*/}
     </button>
     <p className="item-description">
       {description}
     </p>
     <div className="item-count-wrapper">
-      <button className="item-minus-button">-</button>
+      <button className="item-minus-button" type="button">-</button>
       <p className="item-count">
         {count}
       </p>
-      <button className="item-plus-button">+</button>
+      <button className="item-plus-button" type="button">+</button>
     </div>
     <p className="item-total">
-      {total}
+      {totalPrice}
     </p>
   </div>
   );
