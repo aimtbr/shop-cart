@@ -26,12 +26,14 @@ interface DipatchProps {
 }
 
 class CartPage extends Page<Props> {
-  static readonly path = '/cart';
-  static readonly reducer = { cart: cartReducer };
+  constructor(props: Props) {
+    super(props);
 
-  componentWillMount () {
     this.props.getCartItems();
   }
+
+  static readonly path = '/cart';
+  static readonly reducer = { cart: cartReducer };
 
   render () {
     const { items } = this.props;

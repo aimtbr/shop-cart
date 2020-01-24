@@ -74,6 +74,10 @@ const cartReducer = (state=initialState, action: Actions): CartState => {
       return { ...state, items };
     }
 
+    case ActionTypes.REFRESH_CART_ITEMS: {
+      return { ...state, items: action.payload.items };
+    }
+
     default:
       return state;
   }

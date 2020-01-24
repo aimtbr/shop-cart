@@ -5,9 +5,9 @@ import { AppThunk } from '../../../store/types';
 import * as ActionTypes from './types';
 
 export const getCartItems = (): AppThunk => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch({
-      type: typeof ActionTypes.REFRESH_CART_ITEMS,
+      type: ActionTypes.REFRESH_CART_ITEMS,
       payload: {
         items: Items
       }

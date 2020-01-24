@@ -3,7 +3,7 @@ import * as React from 'react';
 import Item from './Item';
 import { Item as ItemType } from '../../../store/types';
 
-import '../style/cart.css';
+import '../style/cart';
 
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const fillCart = (items: { [index: string]: ItemType }): React.ReactElement[] => (
-  Object.values(items).map((item) => <Item {...item} />)
+  Object.values(items).map((item, index) => <Item key={index + 1} {...item} />)
 );
 
 const Cart = (props: Props): React.ReactElement => {

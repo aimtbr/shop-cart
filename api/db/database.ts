@@ -11,7 +11,7 @@ export const Items: Item[] = [
     image: 'https://ouallbed.sirv.com/Images/currant-bun.jpg',
     count: 51,
     price: 2,
-    currency: 'USD'
+    currency: 'EUR'
   },
   {
     id: 'c3da6b0f-e656-46c4-abb0-9136cd12779c',
@@ -22,6 +22,6 @@ export const Items: Item[] = [
     image: 'https://ouallbed.sirv.com/Images/red-velvet-cake.jpg',
     count: 96,
     price: 10,
-    currency: 'USD'
+    currency: 'EUR'
   }
 ];

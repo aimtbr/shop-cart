@@ -1,0 +1,45 @@
+.item {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 15% 50% 35%;
+  grid-template-rows: 30% 40% 30%;
+}
+
+.item-content-wrapper {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 4;
+}
+
+.item-image-wrapper {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  text-align: center;
+}
+
+.item-buttons-wrapper {
+  grid-column-start: 3;
+  display: grid;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: 30% 40% 30%;
+}
+
+.item-image {
+  height: 80%;
+  width: 80%;
+  position: relative;
+  top: 10%;
+}
+
+.remove-item-button {
+  background: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  grid-column-start: 2;
+}
