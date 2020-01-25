@@ -1,23 +1,31 @@
 import * as React from 'react';
 
 import Item from './Item';
-import { Item as ItemType } from '../../../store/types';
+import { CartItems } from '../../../store/types';
 
 import '../style/cart';
 
 
 interface Props {
-  items: {
-    [index: string]: ItemType
-  };
+  items: CartItems;
+  decItemCount: (e: React.MouseEvent, id: string) => void;
+  incItemCount: (e: React.MouseEvent, id: string) => void;
+  removeCartItem: (e: React.MouseEvent, id: string) => void;
 }
-
-const fillCart = (items: { [index: string]: ItemType }): React.ReactElement[] => (
-  Object.values(items).map((item, index) => <Item key={index + 1} {...item} />)
-);
 
 const Cart = (props: Props): React.ReactElement => {
   const { items } = props;
+
+  const fillCart = (items: CartItems): React.ReactElement[] => {
+    return Object.values(items).map((item, index) => {
+      const { decItemCount, incItemCount, removeCartItem } = props;
+
+      return <Item key={index + 1} decItemCount={decItemCount}
+        incItemCount={incItemCount} cartItem={item}
+        removeCartItem={removeCartItem}
+      />;
+    })
+  };
 
   return (
     <div className="cart">

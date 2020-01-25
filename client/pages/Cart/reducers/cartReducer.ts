@@ -1,81 +1,105 @@
-import Actions from '../actions/types';
 import * as ActionTypes from '../actions/types';
-import { Item } from '../../../store/types';
+import { CartItem, CartItems } from '../../../store/types';
 
 export interface CartState {
-  items: {
-    [index: string]: Item
-  };
-  selected_items: string[];
+  items: CartItems;
   currency: string;
   totalPrice: string;
 }
 
 const initialState: CartState = {
   items: {},
-  selected_items: [],
   currency: 'EUR',
   totalPrice: new Intl.NumberFormat('UA', { style: 'currency', currency: 'EUR' }).format(0)
 };
 
-const cartReducer = (state=initialState, action: Actions): CartState => {
+const cartReducer = (state=initialState, action: ActionTypes.CartActions): CartState => {
   switch (action.type) {
     case ActionTypes.INCR_ITEM_COUNT: {
-      // let { items } = state;
-
-      // if (id in state.items) {
-      //   const changedItem = { ...state.items[id] };
-      //   changedItem.count += 1;
-      //   items[id] = changedItem;
-      // }
-
-      // return { ...state, items };
+      const { items } = state;
       const { id } = action.payload;
-      let { items } = state;
-      const changedItem = items[id];
 
-      changedItem.count += 1; // MOVE ALL SUCH CALCULATIONS TO ACTIONS
-      items[id] = changedItem; // DON'T FORGET TO RECALCULATE THE PRICES
+      if (id in items) {
+        const cartItem = items[id];
+        const { item } = cartItem;
+        if (cartItem.count < item.count && cartItem.count < 50) {
+          cartItem.count += 1;
 
-      return { ...state, items };
+          return { ...state, items: { ...items, [id]: cartItem }};
+        }
+      }
+
+      return state;
     }
 
     case ActionTypes.DECR_ITEM_COUNT: {
+      const { items } = state;
       const { id } = action.payload;
-      let { items } = state;
-      const changedItem = items[id];
 
-      changedItem.count -= 1;
-      items[id] = changedItem;
+      if (id in items) {
+        const item = items[id];
 
-      return { ...state, items };
+        if (item.count > 1) {
+          item.count -= 1;
+
+          return { ...state, items: { ...items, [id]: item }};
+        }
+      }
+
+      return state;
     }
 
     case ActionTypes.REMOVE_CART_ITEM: {
       const { id } = action.payload;
       let { items } = state;
 
-      delete items[id];
-
-      return { ...state, items };
-    }
-
-    case ActionTypes.REMOVE_CART_ITEMS: {
-      const { ids } = action.payload;
-      let { items } = state;
-      let id;
-
-      for (id of ids) {
-        if (id in items) {
-          delete items[id];
-        }
+      if (id in items) {
+        delete items[id];
       }
 
       return { ...state, items };
     }
 
+    // case ActionTypes.REMOVE_CART_ITEMS: {
+    //   const { ids } = action.payload;
+    //   let { items } = state;
+    //   let id;
+
+    //   for (id of ids) {
+    //     if (id in items) {
+    //       delete items[id];
+    //     }
+    //   }
+
+    //   return { ...state, items };
+    // }
+
     case ActionTypes.REFRESH_CART_ITEMS: {
-      return { ...state, items: action.payload.items };
+      const { items } = action.payload;
+
+      return { ...state, items };
+    }
+
+    case ActionTypes.REFRESH_TOTAL_PRICE: {
+      const { items } = state;
+      const itemValues = Object.values(items);
+
+      if (itemValues.length > 0) {
+        const totalPriceNumber = itemValues.reduce(
+          (accumulator, currentItem) => {
+            const currentItemTyped = currentItem;
+
+            return accumulator + currentItemTyped.item.price * currentItemTyped.count;
+          }, 0);
+
+        const totalPrice = new Intl.NumberFormat('UA', {
+          style: 'currency',
+          currency: state.currency,
+        }).format(totalPriceNumber);
+
+        return { ...state, totalPrice };
+      }
+      return state;
     }
 
     default:

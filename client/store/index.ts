@@ -29,6 +29,5 @@ const store = createStore(
 const persistor = persistStore(store);
 
 
-export type RootState = ReturnType<typeof rootReducer>;
 export { persistor };
 export default store;

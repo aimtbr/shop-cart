@@ -14,7 +14,7 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     contentBase: path.resolve(__dirname, 'client'),
-    host: '127.0.0.1',
+    host: 'localhost',
     hot: true,
     historyApiFallback: true,
   },
