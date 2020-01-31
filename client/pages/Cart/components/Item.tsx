@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { CartItem } from '../../../store/types';
+import { Link } from 'react-router-dom';
+
+import { CartItem } from '../reducers/types';
 
 import '../style/item';
 
@@ -20,13 +22,15 @@ const Item = (props: Props): React.ReactElement => {
 
   return (
     <div className="item">
-      <div className="item-image-wrapper">
-        <img className="item-image" src={image}/>
+      <div className="item-image-container">
+        <div className="item-image-wrapper">
+          <img className="item-image" src={image}/>
+        </div>
       </div>
       <div className="item-content-wrapper">
-        <p className="item-title">
+        <Link to="/cart" className="item-title">
           {title}
-        </p>
+        </Link>
         <p className="item-description">
           {description}
         </p>
@@ -45,7 +49,7 @@ const Item = (props: Props): React.ReactElement => {
           <button className="item-plus-button" type="button"
             onClick={(e) => incItemCount(e, id)}>+</button>
         </div>
-        <p className="item-total">
+        <p className="item-total-price">
           {totalPrice}
         </p>
       </div>

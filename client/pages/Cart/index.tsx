@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { connect } from "react-redux";
 
-import { getCartItems, increaseItemCount,
-  decreaseItemCount, removeCartItem } from './actions/actions';
 import cartReducer from './reducers/cartReducer';
 import Cart from './components/Cart';
-import { StoreState } from '../../pages';
-import { Page, AppDispatch, CartItems } from "../../store/types";
+import { StoreState } from '..';
+import {
+  getCartItems,
+  increaseItemCount,
+  decreaseItemCount,
+  removeCartItem, } from './actions/actions';
+import { ICart } from './reducers/types';
+import { Page, AppDispatch } from "../../store/types";
 
 
 type Props = StateProps & DipatchProps;
 
 interface StateProps {
-  items: CartItems;
+  cart: ICart;
 }
 
 interface DipatchProps {
@@ -26,8 +30,11 @@ interface DipatchProps {
 class CartPage extends Page<Props> {
   constructor(props: Props) {
     super(props);
+    const itemsCount = Object.keys(this.props.cart.items).length;
 
-    this.props.getCartItems();
+    if (itemsCount === 0) {
+      this.props.getCartItems();
+    }
 
     this.incItemCount = this.incItemCount.bind(this);
     this.decItemCount = this.decItemCount.bind(this);
@@ -57,9 +64,9 @@ class CartPage extends Page<Props> {
 
   render () {
     const { decItemCount, incItemCount, removeCartItem } = this;
-    const { items } = this.props;
+    const { cart } = this.props;
 
-    return <Cart items={items}
+    return <Cart {...cart}
       decItemCount={decItemCount}
       incItemCount={incItemCount}
       removeCartItem={removeCartItem}
@@ -68,7 +75,7 @@ class CartPage extends Page<Props> {
 }
 
 const mapStateToProps = (state: StoreState): StateProps => ({
-  items: state.cart.items,
+  cart: state.cart,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch): DipatchProps => ({

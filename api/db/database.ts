@@ -1,7 +1,6 @@
-import { Item } from '../../client/store/types';
-// TODO: ADD UNIQUE ID FOR ALL THE ITEMS AND GET ITS TYPE FOR AN INTERFACE
+import { Item } from './types';
 
-export const Items: Item[] = [
+export const items: Item[] = [
   {
     id: '9e7190a7-09a4-4898-9418-9166c5b232b9',
     title: 'Currant Bun',

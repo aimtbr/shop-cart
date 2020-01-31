@@ -1,25 +1,24 @@
 import { Action } from 'redux';
+import { CartItems } from '../reducers/types';
 
-import { Item, CartItems } from '../../../store/types';
 
-
-export const INCR_ITEM_COUNT = 'INCR_ITEM_COUNT';
-export const DECR_ITEM_COUNT = 'DECR_ITEM_COUNT';
-export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
-// export const REMOVE_CART_ITEMS = 'REMOVE_CART_ITEMS';
-export const REFRESH_CART_ITEMS = 'REFRESH_CART_ITEMS';
-export const REFRESH_TOTAL_PRICE = 'REFRESH_TOTAL_PRICE';
-
+export const cartTypes = {
+  INCR_ITEM_COUNT: 'INCR_ITEM_COUNT',
+  DECR_ITEM_COUNT: 'DECR_ITEM_COUNT',
+  REMOVE_CART_ITEM: 'REMOVE_CART_ITEM',
+  // REMOVE_CART_ITEMS: 'REMOVE_CART_ITEMS',
+  REFRESH_CART_ITEMS: 'REFRESH_CART_ITEMS',
+};
 
 interface CartItemCount extends Action {
-  type: typeof INCR_ITEM_COUNT | typeof DECR_ITEM_COUNT;
+  type: string;
   payload: {
     id: string;
   }
 }
 
 interface RemoveCartItem extends Action {
-  type: typeof REMOVE_CART_ITEM;
+  type: string;
   payload: {
     id: string;
   }
@@ -33,18 +32,12 @@ interface RemoveCartItem extends Action {
 // }
 
 interface RefreshCartItems extends Action {
-  type: typeof REFRESH_CART_ITEMS;
+  type: string;
   payload: {
-    items: CartItems
+    items: CartItems;
   }
-}
-
-interface RefreshTotalPrice extends Action {
-  type: typeof REFRESH_TOTAL_PRICE;
 }
 
 export type CartActions = CartItemCount |
   RemoveCartItem |
-  RefreshCartItems |
-  RefreshTotalPrice;
-
+  RefreshCartItems;

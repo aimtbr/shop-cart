@@ -1,18 +1,20 @@
 import Cart from './Cart';
-import { CartState } from './Cart/reducers/cartReducer';
-import Payment from './Payment';
+import { ICart } from './Cart/reducers/types';
+import Shipping from './Shipping';
+import { IShipping } from './Shipping/reducers/types';
 
 
 const Pages = {
   Cart,
-  Payment,
+  Shipping,
 };
 
 export interface StoreState {
-  cart: CartState;
+  cart: ICart;
+  shipping: IShipping;
 }
 
 export type PageTypes = typeof Cart
-  | typeof Payment;
+  | typeof Shipping;
 
 export default Pages;
