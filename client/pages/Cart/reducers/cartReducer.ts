@@ -1,4 +1,4 @@
-import { cartTypes, CartActions } from '../actions/types';
+import * as cartTypes from '../actions/types';
 import { ICart } from './types';
 
 const initialState: ICart = {
@@ -7,7 +7,7 @@ const initialState: ICart = {
   totalPrice: 0,
 };
 
-const cartReducer = (state=initialState, action: CartActions): ICart => {
+const cartReducer = (state=initialState, action: cartTypes.CartActions): ICart => {
   switch (action.type) {
     case cartTypes.INCR_ITEM_COUNT: {
       const { items, totalPrice } = state;
@@ -71,20 +71,6 @@ const cartReducer = (state=initialState, action: CartActions): ICart => {
 
       return state;
     }
-
-    // case ActionTypes.REMOVE_CART_ITEMS: {
-    //   const { ids } = action.payload;
-    //   let { items } = state;
-    //   let id;
-
-    //   for (id of ids) {
-    //     if (id in items) {
-    //       delete items[id];
-    //     }
-    //   }
-
-    //   return { ...state, items };
-    // }
 
     case cartTypes.REFRESH_CART_ITEMS: {
       let itemKey;

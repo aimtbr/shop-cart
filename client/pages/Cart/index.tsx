@@ -39,6 +39,7 @@ class CartPage extends Page<Props> {
     this.incItemCount = this.incItemCount.bind(this);
     this.decItemCount = this.decItemCount.bind(this);
     this.removeCartItem = this.removeCartItem.bind(this);
+    console.log('HI');
   }
 
   static readonly path = '/cart';

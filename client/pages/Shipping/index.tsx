@@ -3,9 +3,14 @@ import { connect } from "react-redux";
 
 import shippingReducer from './reducers/shippingReducer';
 import Shipping from './components/Shipping';
-import { saveField } from './actions/actions';
+import {
+  updateField,
+  changeReady,
+  updatePrice,
+  resetField
+} from './actions/actions';
 import { Page, AppDispatch } from "../../store/types";
-import { ShippingFields, IShipping } from './reducers/types';
+import { IChangableFields, IShipping, IReadiness } from './reducers/types';
 import { StoreState } from '..';
 
 
@@ -17,7 +22,10 @@ interface StateProps {
 }
 
 interface DipatchProps {
-  saveField: (field: ShippingFields) => void;
+  updateField: (field: IChangableFields) => void;
+  changeReady: (field: IReadiness) => void;
+  updatePrice: (price: number) => void;
+  resetField: (field: keyof IChangableFields) => void;
 }
 
 
@@ -30,12 +38,22 @@ class ShippingPage extends Page<Props> {
   static readonly reducer = { shipping: shippingReducer };
 
   render () {
-    const { saveField, shipping, totalPrice } = this.props;
+    const {
+      updateField,
+      shipping,
+      totalPrice,
+      changeReady,
+      updatePrice,
+      resetField
+    } = this.props;
 
     return <Shipping
       {...shipping}
-      saveField={saveField}
+      updateField={updateField}
       totalPrice={totalPrice}
+      changeReady={changeReady}
+      updatePrice={updatePrice}
+      resetField={resetField}
     />;
   }
 }
@@ -46,7 +64,10 @@ const mapStateToProps = (state: StoreState): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch): DipatchProps => ({
-  saveField: (field) => dispatch(saveField(field)),
+  updateField: (field) => dispatch(updateField(field)),
+  changeReady: (field) => dispatch(changeReady(field)),
+  updatePrice: (price) => dispatch(updatePrice(price)),
+  resetField: (field) => dispatch(resetField(field)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShippingPage);

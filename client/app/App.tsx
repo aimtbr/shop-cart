@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { Route } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -21,7 +21,10 @@ const App = (): React.ReactElement => {
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <BrowserRouter>
-        {setupRoutes()}
+        <Redirect from="/" to="/cart"/>
+        <Switch>
+          {setupRoutes()}
+        </Switch>
       </BrowserRouter>
     </PersistGate>
   </Provider>

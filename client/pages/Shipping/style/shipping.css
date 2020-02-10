@@ -1,4 +1,49 @@
-.required-field {
-  color: red;
+.shipping {
+  display: grid;
+  width: 80%;
+  height: auto;
+  margin: 4rem auto;
+  padding: 3rem;
+  background: #FFFFFF;
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+  border-radius: 6px;
 }
 
+.shipping-form {
+  display: grid;
+  grid-gap: 1.3rem;
+  width: 70%;
+}
+
+.shipping-field {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  height: 2.5rem;
+}
+
+.shipping-field-label {
+  font-size: 1.3rem;
+}
+
+.shipping-input-field {
+  font-size: 1rem;
+  border-radius: 2px;
+}
+
+.required-field {
+  color: #FF0000;
+}
+
+.invalid {
+  border: 1px solid #ad0000;
+  box-shadow: 0px 0px 1px 0px #FF0000;
+}
+
+.valid {
+  border: 1px solid rgb(0, 158, 27);
+  box-shadow: 0px 0px 1px 0px rgb(0, 179, 24);
+}
+
+input {
+  border: 1px solid gray;
+}

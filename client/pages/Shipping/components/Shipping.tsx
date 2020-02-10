@@ -1,15 +1,24 @@
 import * as React from 'react';
 import isEmail from 'validator/lib/isEmail';
+import isMobilePhone from 'validator/lib/isMobilePhone';
 
-import { shippingOptions } from '../config/options';
-import { ShippingFields, IShipping } from '../reducers/types';
+import { ShippingOptions } from './ShippingOptions';
+import {
+  IChangableFields,
+  IShipping,
+  IReadiness,
+} from '../reducers/types';
+import { isName, isAddress } from '../../../helpers/validations';
 
 import '../style/shipping';
 
 
 interface Props extends IShipping {
   totalPrice: number;
-  saveField: (field: ShippingFields) => void;
+  updateField: (field: IChangableFields) => void;
+  changeReady: (field: IReadiness) => void;
+  updatePrice: (price: number) => void;
+  resetField: (field: keyof IChangableFields) => void;
 }
 
 type IChangeEvent<T = HTMLInputElement | HTMLSelectElement> = React.ChangeEvent<T>;
@@ -17,61 +26,55 @@ type IChangeEvent<T = HTMLInputElement | HTMLSelectElement> = React.ChangeEvent<
 
 const Shipping = (props: Props): React.ReactElement => {
   const {
-    saveField,
+    updateField,
+    changeReady,
+    updatePrice,
+    resetField,
     name,
     address,
     phone,
     email,
     totalPrice,
     ready,
+    shippingOption: currentOption,
   } = props;
-  let { shippingOptions: currentShippingOption } = props;
-
-  if (currentShippingOption === '') {
-    const { free, express } = shippingOptions.default;
-    currentShippingOption = totalPrice > 300 ? express : free;
-  }
 
   const fieldChangeHandler = (
       event: IChangeEvent,
-      validate?: (value: string) => boolean
+      validate: (value: string) => boolean
     ): void => {
       const { value, name } = event.target;
+      const isValid = validate(value);
 
-      if (validate === undefined || validate(value)) {
-        saveField({ [name]: value });
+      if (isValid) {
+        highlightValid(event);
+        updateField({ [name]: value });
       } else {
+        resetField(name as keyof IChangableFields);
         highlightInvalid(event);
       }
+
+      changeReady({ [name]: isValid });
     };
 
   const highlightInvalid = (event: IChangeEvent): void => {
-    event.target.style.boxShadow = '0px 0px 3px 1px #ff0000';
+    const { classList } = event.target;
+
+    if (classList.contains('valid')) {
+      classList.remove('valid');
+    }
+
+    classList.add('invalid');
   };
 
-  const fillShippingOptions = (): React.ReactElement[] => {
-    const options = Object.entries(shippingOptions)
-      .reduce(
-        (accumulator: React.ReactElement[], [key, value]) => {
-          let option = (
-            <option key={key}>
-              {value}
-            </option>
-          );
+  const highlightValid = (event: IChangeEvent): void => {
+    const { classList } = event.target;
 
-          if (key === 'default') {
-            option = (
-              <option key={key}>
-                {value}
-              </option>
-            );
-          }
+    if (classList.contains('invalid')) {
+      classList.remove('invalid');
+    }
 
-          accumulator.push(option);
-          return accumulator;
-        }, []);
-
-    return options;
+    event.target.classList.add('valid');
   };
 
   const formIsReady = (): boolean => {
@@ -86,47 +89,65 @@ const Shipping = (props: Props): React.ReactElement => {
 
   return (
     <div className="shipping">
-      <form onSubmit={onSubmitHandler}>
-        <label className="shipping-name-field-label-required">
-          Name<span className="required-field">*</span>
-          <input name="name" className="shipping-name-field"
-            placeholder="John Brown" type="text" required
-            defaultValue={name}
-            />
-        </label>
-
-        <label className="shipping-address-field-label">
-          Address<span className="required-field">*</span>
-          <input name="address" className="shipping-address-field"
-            type="text" defaultValue={address} required/>
-        </label>
-
-        <label className="shipping-phone-field-label">
-          Phone
-          <input name="phone" className="shipping-phone-field"
+      <form className="shipping-form" onSubmit={onSubmitHandler}>
+        <div className="shipping-field">
+          <label className="shipping-field-label">
+            Name<span className="required-field">*</span>
+          </label>
+          <input name="name" className="shipping-input-field"
+            placeholder="John Brown" type="text"
+            required defaultValue={name}
+            onChange={(event: IChangeEvent) => {
+              fieldChangeHandler(event, isName);
+            }}
+          />
+        </div>
+        <div className="shipping-field">
+          <label className="shipping-field-label">
+            Address<span className="required-field">*</span>
+          </label>
+          <input name="address" className="shipping-input-field"
+            type="text" defaultValue={address} required
+            placeholder="Ukraine, Kiev, Kievska, Shevchenko"
+            onChange={(event: IChangeEvent) => {
+              fieldChangeHandler(event, isAddress);
+            }}
+          />
+        </div>
+        <div className="shipping-field">
+          <label className="shipping-field-label">
+            Phone
+          </label>
+          <input name="phone" className="shipping-input-field"
             placeholder="+380" type="tel" maxLength={13}
-            pattern="+380[0-9]{9}" defaultValue={phone}/>
-        </label>
-
-        <label className="shipping-email-field-label">
-          E-mail
-          <input name="email" className="shipping-email-field"
+            defaultValue={phone}
+            onChange={(event: IChangeEvent) => {
+              fieldChangeHandler(event, (value) => isMobilePhone(value, 'uk-UA'));
+            }}
+          />
+        </div>
+        <div className="shipping-field">
+          <label className="shipping-field-label">
+            E-mail
+          </label>
+          <input name="email" className="shipping-input-field"
             type="email" defaultValue={email}
             onChange={(event: IChangeEvent) => (
               fieldChangeHandler(event, isEmail)
-            )}/>
-        </label>
-
-        <label className="shipping-options">
-          Shipping options
-          <select name="shippingOptions"
-            defaultValue={currentShippingOption}
-            onChange={(event: IChangeEvent) => {
-              fieldChangeHandler(event);
-            }}>
-            {fillShippingOptions()}
-          </select>
-        </label>
+            )}
+          />
+        </div>
+        <div className="shipping-field">
+          <label className="shipping-field-label">
+            Shipping options
+          </label>
+          <ShippingOptions
+            totalPrice={totalPrice}
+            updateField={updateField}
+            updatePrice={updatePrice}
+            currentOption={currentOption}
+          />
+        </div>
       </form>
       <div className="shipping-pay-button-wrapper">
         <button className="shipping-pay-button" disabled={!formIsReady()}

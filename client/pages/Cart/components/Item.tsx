@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { CartItem } from '../reducers/types';
+import { ICartItem } from '../reducers/types';
 
 import '../style/item';
 
 interface Props {
-  cartItem: CartItem;
+  cartItem: ICartItem;
   decItemCount: (e: React.MouseEvent, id: string) => void;
   incItemCount: (e: React.MouseEvent, id: string) => void;
   removeCartItem: (e: React.MouseEvent, id: string) => void;

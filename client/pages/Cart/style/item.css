@@ -20,6 +20,7 @@
 .item-title {
   font-weight: bold;
   font-size: 1.1rem;
+  text-decoration: none;
 }
 
 .item-image-container {
@@ -83,8 +84,16 @@
 
 .remove-item-button {
   background: transparent;
+  border: transparent;
   outline: none;
-  border: none;
   cursor: pointer;
   grid-column-start: 2;
+  width: 40%;
+  height: 80%;
+  margin: auto;
+  border-radius: 3rem;
+}
+
+.remove-item-button:hover {
+  opacity: .5;
 }

@@ -1,21 +1,25 @@
+// the whole state of the 'Shipping' page
 export interface IShipping {
   name: string;
   address: string;
   phone?: string;
   email?: string;
-  shippingOptions: string;
-  ready: {
-    name: boolean;
-    address: boolean;
-    phone: boolean;
-    email: boolean;
-  }
+  additionalPrice: number;
+  shippingOption: string;
+  ready: IReadiness;
 }
 
-export interface ShippingFields {
+export interface IReadiness {
+  name?: boolean;
+  address?: boolean;
+  phone?: boolean;
+  email?: boolean;
+}
+
+export interface IChangableFields {
   name?: string;
   address?: string;
   phone?: string;
   email?: string;
-  shippingOptions?: string;
+  shippingOption?: string;
 }

@@ -1,9 +1,9 @@
-import { items } from '../../../../api/db/database';
 import { AppThunk } from '../../../store/types';
-import { cartTypes } from './types';
+import { items } from '../../../store/db/database';
+import * as cartTypes from './types';
 
-export const getCartItems = (): AppThunk => {
-  return (dispatch) => {
+export const getCartItems = (): AppThunk<Promise<void>> => {
+  return async (dispatch): Promise<void> => {
     const cartItems = items.reduce((accumulator, currentItem, index) => {
       const { id: currentItemId } = currentItem;
       const cartItem = {
@@ -58,3 +58,11 @@ export const removeCartItem = (id: string): AppThunk => {
   };
 };
 
+export const updateTotalPrice = (difference: number): AppThunk => {
+  return (dispatch) => {
+    dispatch({
+      type: cartTypes.UPDATE_TOTAL_PRICE,
+      payload: difference
+    })
+  };
+};

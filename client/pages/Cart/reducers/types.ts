@@ -1,17 +1,17 @@
-import { Item } from "../../../../api/db/types";
+import { Item } from "../../../store/db/types";
 
 
-export interface CartItem {
+export interface ICartItem {
   item: Item;
   count: number;
 }
 
-export interface CartItems {
-  [index: string]: CartItem;
+export interface ICartItems {
+  [index: string]: ICartItem;
 }
 
 export interface ICart {
-  items: CartItems;
+  items: ICartItems;
   currency: string;
   totalPrice: number;
 }
