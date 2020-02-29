@@ -13,4 +13,4 @@ server.get('*', (req: Request, res: Response) => {
   res.sendFile(resolve(PUBLIC_DIR, 'index.html'));
 });
 
-server.listen(PORT, () => console.log('App is running on port 3000'));
+server.listen(PORT, () => console.log(`App is running on port ${PORT}`));

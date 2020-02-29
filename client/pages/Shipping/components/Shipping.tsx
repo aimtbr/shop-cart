@@ -108,7 +108,7 @@ const Shipping = (props: Props): React.ReactElement => {
           </label>
           <input name="address" className="shipping-input-field"
             type="text" defaultValue={address} required
-            placeholder="Ukraine, Kiev, Kievska, Shevchenko"
+            placeholder="Shevchenko, Kiev, Kievska, Ukraine"
             onChange={(event: IChangeEvent) => {
               fieldChangeHandler(event, isAddress);
             }}

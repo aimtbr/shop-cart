@@ -2,7 +2,7 @@
   display: grid;
   width: 100%;
   height: 11rem;
-  grid-template-columns: minmax(13rem, 1fr) minmax(28rem, 1fr) minmax(25rem, 1fr);
+  grid-template-columns: 22% 41% 37%;
 }
 
 .item-description {
@@ -59,8 +59,20 @@
   width: 35%;
   background: transparent;
   margin: auto;
+  border-radius: 2px;
   border: 1px solid #bdbdbd;
   cursor: pointer;
+  outline: none;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.item-minus-button:active, .item-plus-button:active {
+  box-shadow: 0 0 2px gray;
+}
+
+.item-minus-button:hover, .item-plus-button:hover {
+  border: 1px solid #a0a0a0;
 }
 
 .item-minus-button {
@@ -96,4 +108,16 @@
 
 .remove-item-button:hover {
   opacity: .5;
+}
+
+.cart-buy-button {
+  outline: none;
+}
+
+.cart-buy-button:hover {
+  box-shadow: 0 0 3px #adacac;
+}
+
+.cart-buy-button:active {
+  opacity: .6;
 }
